@@ -11,6 +11,11 @@ env:
 before_install:
   - export TAG=`if [[ $TRAVIS_PULL_REQUEST == "false" ]] && [[ $TRAVIS_BRANCH == "master" ]]; then echo "latest"; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi`
   - docker build -t $REPO .
+deploy:
+  provider: script
+  script: bash docker_push
+  on:
+    branch: master
 script:
   - docker images $REPO
 after_success:
